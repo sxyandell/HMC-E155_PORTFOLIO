@@ -1,0 +1,10 @@
+---
+title: "E155 Blog"
+listing:
+  contents: labs
+  sort: "date desc"
+  type: default
+  categories: false
+---
+
+hi

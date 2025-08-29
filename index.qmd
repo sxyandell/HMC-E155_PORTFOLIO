@@ -1,0 +1,17 @@
+---
+title: "E155 Portfolio"
+image: images/headshot.jpeg
+about:
+    template: jolla
+    links: 
+        - icon: linkedin
+          text: LinkedIn
+          href: https://www.linkedin.com/in/yandell-sarah/
+        - icon: github
+          text: GitHub
+          href: https://github.com/sxyandell
+---
+
+Sarah is a current undergraduate student in Computer Science, Mathematics, and Economics, she is passionate about leveraging technology and analytical problem-solving to drive impactful solutions. Her experience spans software development, optimization, and data analysis, with projects ranging from building AI-powered applications to designing mathematical models for decision-making.
+
+She is always eager to explore innovative applications of technology, connect with like-minded professionals, and contribute to projects that create meaningful impact.
