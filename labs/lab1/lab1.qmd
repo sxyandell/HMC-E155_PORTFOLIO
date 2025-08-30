@@ -1,11 +1,8 @@
 ---
 title: "E155 Lab 1 Page"
-description: "Welcome to my E155 Lab 1 Page"
+description: "FPGA and MCU Setup and Testing"
 author: "Sarah Yandell"
 date: "8/29/25"
-categories:
-  - reflection
-  - labreport
-draft: false
 ---
-hi
+
+## Lab 1 FPGA and MCU Setup and Testing

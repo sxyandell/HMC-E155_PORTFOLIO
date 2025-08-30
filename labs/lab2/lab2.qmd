@@ -3,9 +3,4 @@ title: "E155 Lab 2 Page"
 description: "Welcome to my E155 Lab 2 Page"
 author: "Sarah Yandell"
 date: "8/29/25"
-categories:
-  - reflection
-  - labreport
-draft: false
 ---
-hi

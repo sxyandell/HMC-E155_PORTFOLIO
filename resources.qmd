@@ -3,5 +3,12 @@ title: "E155 Resources Pages"
 description: "Welcome to my E155 Resources Pages"
 author: "Sarah Yandell"
 date: "8/29/25"
+about:
+    template: jolla
+    links: 
+        - icon: fa-solid fa-link
+          text: E155 Course Page
+          href: https://hmc-e155.github.io/
 ---
-hi
+
+

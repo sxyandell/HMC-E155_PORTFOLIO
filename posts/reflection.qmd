@@ -1,0 +1,10 @@
+---
+title: "Reflection Post"
+description: "Goals for the Semester"
+author: "Sarah Yandell"
+date: "8/29/25"
+---
+
+I am taking E155 because I really enjoyed E85 and want to explore computer engineering further. I am  excited for the labs, since I enjoy their hands-on aspect. My main goals for the class are to enjoy the experience, learn a lot, and have fun while doing it.
+
+More specific goals I have are to get comfortable with coding in Verilog and to deepen my understanding of how microcontrollers work. Overall, I’m looking forward to diving into these topics, challenging myself, and growing my technical skills.
