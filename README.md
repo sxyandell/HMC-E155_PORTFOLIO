@@ -7,8 +7,14 @@ This site is built using Quarto
 
 ### How to Run
 Run:
+
 	```
 	quarto preview
 	```
 
+### How to update to publish
+Run:
 
+	```
+	quarto publish gh-pages
+	```
