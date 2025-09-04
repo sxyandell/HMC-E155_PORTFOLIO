@@ -30,8 +30,6 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<script src="site_libs/quarto-listing/list.min.js"></script>
-<script src="site_libs/quarto-listing/quarto-listing.js"></script>
 <script src="site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="site_libs/quarto-html/axe/axe-check.js" type="module"></script>
@@ -70,65 +68,7 @@ ul.task-list li input[type="checkbox"] {
     "search-label": "Search"
   }
 }</script>
-<script>
 
-  window.document.addEventListener("DOMContentLoaded", function (_event) {
-    const listingTargetEl = window.document.querySelector('#listing-listing .list');
-    if (!listingTargetEl) {
-      // No listing discovered, do not attach.
-      return; 
-    }
-
-    const options = {
-      valueNames: ['listing-date','listing-title','listing-author','listing-image','listing-description',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-file-modified-sort'] }],
-      
-      searchColumns: ["listing-date","listing-title","listing-author","listing-image","listing-description"],
-    };
-
-    window['quarto-listings'] = window['quarto-listings'] || {};
-    window['quarto-listings']['listing-listing'] = new List('listing-listing', options);
-
-    if (window['quarto-listing-loaded']) {
-      window['quarto-listing-loaded']();
-    }
-  });
-
-  window.addEventListener('hashchange',() => {
-    if (window['quarto-listing-loaded']) {
-      window['quarto-listing-loaded']();
-    }
-  })
-  </script>
-
-  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
-  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
-
-<script type="text/javascript">
-const typesetMath = (el) => {
-  if (window.MathJax) {
-    // MathJax Typeset
-    window.MathJax.typeset([el]);
-  } else if (window.katex) {
-    // KaTeX Render
-    var mathElements = el.getElementsByClassName("math");
-    var macros = [];
-    for (var i = 0; i < mathElements.length; i++) {
-      var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
-        window.katex.render(texText.data, mathElements[i], {
-          displayMode: mathElements[i].classList.contains('display'),
-          throwOnError: false,
-          macros: macros,
-          fleqn: false
-        });
-      }
-    }
-  }
-}
-window.Quarto = {
-  typesetMath
-};
-</script>
 
 <link rel="stylesheet" href="styles.css">
 </head>
@@ -184,7 +124,15 @@ window.Quarto = {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#lab-1-fpga-and-mcu-setup-and-testing" id="toc-lab-1-fpga-and-mcu-setup-and-testing" class="nav-link active" data-scroll-target="#lab-1-fpga-and-mcu-setup-and-testing">Lab 1: FPGA and MCU Setup and Testing</a></li>
+  <li><a href="#lab-1-fpga-and-mcu-setup-and-testing" id="toc-lab-1-fpga-and-mcu-setup-and-testing" class="nav-link active" data-scroll-target="#lab-1-fpga-and-mcu-setup-and-testing">Lab 1: FPGA and MCU Setup and Testing</a>
+  <ul class="collapse">
+  <li><a href="#introduction" id="toc-introduction" class="nav-link" data-scroll-target="#introduction">Introduction</a></li>
+  <li><a href="#design-and-testing-methodology" id="toc-design-and-testing-methodology" class="nav-link" data-scroll-target="#design-and-testing-methodology">Design and Testing Methodology</a></li>
+  <li><a href="#technical-documentation" id="toc-technical-documentation" class="nav-link" data-scroll-target="#technical-documentation">Technical Documentation</a></li>
+  <li><a href="#result-and-discussion" id="toc-result-and-discussion" class="nav-link" data-scroll-target="#result-and-discussion">Result and Discussion</a></li>
+  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion">Conclusion</a></li>
+  <li><a href="#ai-prototype-summary" id="toc-ai-prototype-summary" class="nav-link" data-scroll-target="#ai-prototype-summary">AI Prototype Summary</a></li>
+  </ul></li>
   <li><a href="#lab-2-multiplexed-7-segment-display" id="toc-lab-2-multiplexed-7-segment-display" class="nav-link" data-scroll-target="#lab-2-multiplexed-7-segment-display">Lab 2: Multiplexed 7-Segment Display</a></li>
   <li><a href="#lab-3-keypad-scanner" id="toc-lab-3-keypad-scanner" class="nav-link" data-scroll-target="#lab-3-keypad-scanner">Lab 3: Keypad Scanner</a></li>
   <li><a href="#lab-4-digital-audio" id="toc-lab-4-digital-audio" class="nav-link" data-scroll-target="#lab-4-digital-audio">Lab 4: Digital Audio</a></li>
@@ -216,8 +164,65 @@ window.Quarto = {
 </header>
 
 
+<!-- listing:
+  contents: labs
+  sort: "date desc"
+  type: default
+  categories: false -->
 <section id="lab-1-fpga-and-mcu-setup-and-testing" class="level2">
 <h2 class="anchored" data-anchor-id="lab-1-fpga-and-mcu-setup-and-testing">Lab 1: FPGA and MCU Setup and Testing</h2>
+<section id="introduction" class="level3">
+<h3 class="anchored" data-anchor-id="introduction">Introduction</h3>
+<p>In this lab we set up and tested our FPGA and MCU by assembling a circuit board. Then we wrote verilog code to to control LEDs and a 7-segment display based on switch inputs. We followed a truth table to control LED 0 amd LED 1 beased off switch inputs. Then we set LED 2 to blink at 24 HJZ. Finally we programed the 7-segment display to dispaly the hex equilvalent of the switch inputs.</p>
+</section>
+<section id="design-and-testing-methodology" class="level3">
+<h3 class="anchored" data-anchor-id="design-and-testing-methodology">Design and Testing Methodology</h3>
+<p>For hardware I connected the FPGA and the development board to a bread board with a ribbon cable and breadboard adapter PCB. Then i connected the 7-segment display to the FPGA by powering the 7-segment display and, following the 7-segment display schematic, connecting the segments of the display to the FPGA pins with wires and resistors. For software I wrote Verilog modules for the required logic, including the LED control logic based on DIP switch input and the 7-segment display decoder. I thoroughly tested the design on hardware by toggling the DIP switches and verifying the corresponding outputs on the LEDs and 7-segment display, which consistently produced the expected results</p>
+</section>
+<section id="technical-documentation" class="level3">
+<h3 class="anchored" data-anchor-id="technical-documentation">Technical Documentation</h3>
+<p>The source code for the project can be found in the associated <a href="https://github.com/sxyandell/e155-lab1">Github repository</a>.</p>
+<section id="block-diagram" class="level4">
+<h4 class="anchored" data-anchor-id="block-diagram">Block Diagram</h4>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/lab1/blockDiagram.jpeg" class="img-fluid figure-img"></p>
+<figcaption>Figure 1</figcaption>
+</figure>
+</div>
+<p>The block diagram in Figure 1 demonstrates the overall architecture of the design. The top-level module lab1_sy includes one submodule: the module that encodes the 7-segment display. The top-level module also includes the controls to the LEDS, the counter, and the HSOSC.</p>
+</section>
+<section id="schematic" class="level4">
+<h4 class="anchored" data-anchor-id="schematic">Schematic</h4>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/lab1/schem.jpeg" class="img-fluid figure-img"></p>
+<figcaption>Figure 2</figcaption>
+</figure>
+</div>
+<p>Figure 2 shows the physical layout of the design. The LEDS were connected using 1k resistors. The FPGA was connected in to the 7-segment display and powered with 3v. Then 1k resistors were used to ensure the output of FPGA pins would work with the 7-segment display LEDs.</p>
+</section>
+</section>
+<section id="result-and-discussion" class="level3">
+<h3 class="anchored" data-anchor-id="result-and-discussion">Result and Discussion</h3>
+<p>I completed all the Proficiency Tasks and the Excellence tasks for the HDL &amp; Code Specifications. However, I did not create and run a testbench in ModelSim due to time constraints. I thoroughly tested the design on hardware by toggling the DIP switches and verifying the corresponding outputs on the LEDs and 7-segment display, which consistently produced the expected results. If given more time i would have made a testbench to help catch edge cases and improve debugging and efficency. The design performs as expected and described in the lab: the switches control the correct LEDs, and the second LED blinks at approximately 2.4 Hz. Also the seven segment display displays the correct hex according to the switchs.</p>
+</section>
+<section id="conclusion" class="level3">
+<h3 class="anchored" data-anchor-id="conclusion">Conclusion</h3>
+<p>In this lab, I assembled the development board, programmed the FPGA and MCU, and implemented a Verilog design to control LEDs and a 7-segment display based on DIP switch inputs. The design performed reliably, with accurate and stable outputs. I spent approximately 25 hours completing this lab.</p>
+</section>
+<section id="ai-prototype-summary" class="level3">
+<h3 class="anchored" data-anchor-id="ai-prototype-summary">AI Prototype Summary</h3>
+<p>I think that it is cool that the LLM is able to generate code and their explnation of things is pretty easy to understand/follow. But the LLM is not always correct and it will lie to you. This was the code that the LLM gave to me give the prompt</p>
+<p><img src="images/lab1/aiCode.png" class="img-fluid"></p>
+<p>When I ran this code I got an error message of</p>
+<p>“ERROR &lt;35901063&gt; - synthesis: c:/users/syandell/desktop/ai/lab1_ai/source/impl_1/lab1_sy_ai.sv(16): instantiating unknown module SB_HFOSC. VERI-1063”,</p>
+<p>When giving the error message back to the LLM it reesponded with this</p>
+<p><img src="images/lab1/aiError.png" class="img-fluid"> <img src="images/lab1/aiErrorFix.png" class="img-fluid"></p>
+<p>I input the new code and got another error</p>
+<p>So it seems that the LLM is able to explain but its implementaiton is not very good.</p>
+<p>I think that the LLMs can be helpful in explaning and maybe making smaller/less complicated code but, they are not accurate or very good at doing higher level and more complicated things. So they should not be trusted.</p>
+</section>
 </section>
 <section id="lab-2-multiplexed-7-segment-display" class="level2">
 <h2 class="anchored" data-anchor-id="lab-2-multiplexed-7-segment-display">Lab 2: Multiplexed 7-Segment Display</h2>
@@ -238,64 +243,9 @@ window.Quarto = {
 <h2 class="anchored" data-anchor-id="lab-7-the-advanced-encryption-standard">Lab 7: The Advanced Encryption Standard</h2>
 
 
-
 </section>
 
-<div class="quarto-listing quarto-listing-container-default" id="listing-listing">
-<div class="list quarto-listing-default">
-<div class="quarto-post image-right" data-index="0" data-listing-date-sort="1756450800000" data-listing-file-modified-sort="1756534386586" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="1">
-<div class="thumbnail"><a href="./labs/lab1/lab1.html" class="no-external">
-
-<div class="listing-item-img-placeholder card-img-top" >&nbsp;</div>
-
-</a></div>
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="./labs/lab1/lab1.html" class="no-external">E155 Lab 1 Page</a>
-</h3>
-<div class="delink listing-description"><a href="./labs/lab1/lab1.html" class="no-external">
-<p>FPGA and MCU Setup and Testing</p>
-</a></div>
-</div>
-<div class="metadata">
-<a href="./labs/lab1/lab1.html" class="no-external">
-<div class="listing-date">
-Aug 29, 2025
-</div>
-<div class="listing-author">
-Sarah Yandell
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="1" data-listing-date-sort="1756450800000" data-listing-file-modified-sort="1756534386587" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="1">
-<div class="thumbnail"><a href="./labs/lab2/lab2.html" class="no-external">
-
-<div class="listing-item-img-placeholder card-img-top" >&nbsp;</div>
-
-</a></div>
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="./labs/lab2/lab2.html" class="no-external">E155 Lab 2 Page</a>
-</h3>
-<div class="delink listing-description"><a href="./labs/lab2/lab2.html" class="no-external">
-<p>Welcome to my E155 Lab 2 Page</p>
-</a></div>
-</div>
-<div class="metadata">
-<a href="./labs/lab2/lab2.html" class="no-external">
-<div class="listing-date">
-Aug 29, 2025
-</div>
-<div class="listing-author">
-Sarah Yandell
-</div>
-</a>
-</div>
-</div>
-</div>
-<div class="listing-no-matching d-none">No matching items</div>
-</div></main> <!-- /main -->
+</main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
     const icon = "";
