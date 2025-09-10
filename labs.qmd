@@ -1,56 +1,247 @@
 ---
 title: "E155 Labs Page"
-listing:
+---
+
+<!-- listing:
   contents: labs
   sort: "date desc"
   type: default
-  categories: false
----
+  categories: false -->
 
 ## Lab 1: FPGA and MCU Setup and Testing
 
 ### Introduction
 In this lab we set up and tested our FPGA and MCU by assembling a circuit board. Then we wrote verilog code to 
 to control LEDs and a 7-segment display based on switch inputs. We followed a truth table to control LED 0 amd LED 1 beased off switch inputs. Then we set LED 2 to blink at 24 HJZ. Finally we programed the 7-segment display to dispaly the hex equilvalent of the switch inputs.
-### Design and Testing Methodology
 
+### Design and Testing Methodology
 For hardware I connected the FPGA and the development board to a bread board with a ribbon cable and breadboard adapter PCB. Then i connected the 7-segment display to the FPGA by powering the 7-segment display and, following the 7-segment display schematic, connecting the segments of the display to the FPGA pins with wires and resistors. 
 For software I wrote Verilog modules for the required logic, including the LED control logic based on DIP switch input and the 7-segment display decoder.
 I thoroughly tested the design on hardware by toggling the DIP switches and verifying the corresponding outputs on the LEDs and 7-segment display, which consistently produced the expected results
 
 ### Technical Documentation
-
-The source code for the project can be found in the associated Github repository.
+The source code for the project can be found in the associated [Github repository](https://github.com/sxyandell/e155-lab1).
 
 #### Block Diagram
-The block diagram in Figure 1 demonstrates the overall architecture of the design. The top-level module top includes one submodule: the module that .
+![Figure 1](images/lab1/blockDiagram.jpeg)
+
+The block diagram in Figure 1 demonstrates the overall architecture of the design. The top-level module lab1_sy includes one submodule: the module that encodes the 7-segment display. The top-level module also includes the controls to the LEDS, the counter, and the HSOSC. 
 
 
 #### Schematic
-Figure 2 shows the physical layout of the design. A
+![Figure 2](images/lab1/schem.jpeg)
+
+Figure 2 shows the physical layout of the design. The LEDS were connected using 1k resistors. The FPGA was connected in to the 7-segment display and powered with 3v. Then  1k resistors were used to ensure the output of FPGA pins would work with the 7-segment display LEDs.
 
 
 ### Result and Discussion
-
 I completed all the Proficiency Tasks and the Excellence tasks for the HDL & Code Specifications. However, I did not create and run a testbench in ModelSim due to time constraints. I thoroughly tested the design on hardware by toggling the DIP switches and verifying the corresponding outputs on the LEDs and 7-segment display, which consistently produced the expected results. If given more time i would have made a testbench to help catch edge cases and improve debugging and efficency. The design performs as expected and described in the lab: the switches control the correct LEDs, and the second LED blinks at approximately 2.4 Hz. Also the seven segment display displays the correct hex according to the switchs. 
 
 
 ### Conclusion
-
 In this lab, I assembled the development board, programmed the FPGA and MCU, and implemented a Verilog design to control LEDs and a 7-segment display based on DIP switch inputs. The design performed reliably, with accurate and stable outputs. I spent approximately 25 hours completing this lab.
 
 ### AI Prototype Summary
+I think that it is cool that the LLM is able to generate code and their explnation of things is pretty easy to understand/follow. But the LLM is not always correct and it will lie to you. This was the code that the LLM gave to me give the prompt
+
+![](images/lab1/aiCode.png)
+
+When I ran this code I got an error message of 
+
+"ERROR <35901063> - synthesis: c:/users/syandell/desktop/ai/lab1_ai/source/impl_1/lab1_sy_ai.sv(16): instantiating unknown module SB_HFOSC. VERI-1063",
+
+When giving the error message back to the LLM it reesponded with this
+
+![](images/lab1/aiError.png)
+![](images/lab1/aiErrorFix.png)
+
+
+I input the new code and got another error
+
+So it seems that the LLM is able to explain but its implementaiton is not very good. 
+
+I think that the LLMs can be helpful in explaning and maybe making smaller/less complicated code but, they are not accurate or very good at doing higher level and more complicated things. So they should not be trusted.  
 
 
 ## Lab 2: Multiplexed 7-Segment Display
 
+### Introduction
+In this lab we 
+
+### Design and Testing Methodology
+
+
+### Technical Documentation
+The source code for the project can be found in the associated [Github repository](https://github.com/sxyandell/e155-lab2).
+
+#### Block Diagram
+![Figure 1](images/lab1/blockDiagram.jpeg)
+
+The block diagram in Figure 1 demonstrates the overall architecture of the design.
+
+
+#### Schematic
+![Figure 2](images/lab1/schem.jpeg)
+
+Figure 2 shows the physical layout of the design. 
+
+
+### Result and Discussion
+
+
+### Conclusion
+
+### AI Prototype Summary
+
+
+
 ## Lab 3: Keypad Scanner
+
+### Introduction
+In this lab we 
+
+### Design and Testing Methodology
+
+
+### Technical Documentation
+The source code for the project can be found in the associated [Github repository](https://github.com/sxyandell/e155-lab1).
+
+#### Block Diagram
+![Figure 1](images/lab1/blockDiagram.jpeg)
+
+The block diagram in Figure 1 demonstrates the overall architecture of the design.
+
+
+#### Schematic
+![Figure 2](images/lab1/schem.jpeg)
+
+Figure 2 shows the physical layout of the design. 
+
+
+### Result and Discussion
+
+
+### Conclusion
+
+### AI Prototype Summary
 
 ## Lab 4: Digital Audio
 
+### Introduction
+In this lab we 
+
+### Design and Testing Methodology
+
+
+### Technical Documentation
+The source code for the project can be found in the associated [Github repository](https://github.com/sxyandell/e155-lab1).
+
+#### Block Diagram
+![Figure 1](images/lab1/blockDiagram.jpeg)
+
+The block diagram in Figure 1 demonstrates the overall architecture of the design.
+
+
+#### Schematic
+![Figure 2](images/lab1/schem.jpeg)
+
+Figure 2 shows the physical layout of the design. 
+
+
+### Result and Discussion
+
+
+### Conclusion
+
+### AI Prototype Summary
+
 ## Lab 5: Interrupts
+
+### Introduction
+In this lab we 
+
+### Design and Testing Methodology
+
+
+### Technical Documentation
+The source code for the project can be found in the associated [Github repository](https://github.com/sxyandell/e155-lab1).
+
+#### Block Diagram
+![Figure 1](images/lab1/blockDiagram.jpeg)
+
+The block diagram in Figure 1 demonstrates the overall architecture of the design.
+
+
+#### Schematic
+![Figure 2](images/lab1/schem.jpeg)
+
+Figure 2 shows the physical layout of the design. 
+
+
+### Result and Discussion
+
+
+### Conclusion
+
+### AI Prototype Summary
 
 ## Lab 6: The Internet of Things and Serial Peripheral Interface
 
+### Introduction
+In this lab we 
+
+### Design and Testing Methodology
+
+
+### Technical Documentation
+The source code for the project can be found in the associated [Github repository](https://github.com/sxyandell/e155-lab1).
+
+#### Block Diagram
+![Figure 1](images/lab1/blockDiagram.jpeg)
+
+The block diagram in Figure 1 demonstrates the overall architecture of the design.
+
+
+#### Schematic
+![Figure 2](images/lab1/schem.jpeg)
+
+Figure 2 shows the physical layout of the design. 
+
+
+### Result and Discussion
+
+
+### Conclusion
+
+### AI Prototype Summary
+
 ## Lab 7: The Advanced Encryption Standard
+
+### Introduction
+In this lab we 
+
+### Design and Testing Methodology
+
+
+### Technical Documentation
+The source code for the project can be found in the associated [Github repository](https://github.com/sxyandell/e155-lab1).
+
+#### Block Diagram
+![Figure 1](images/lab1/blockDiagram.jpeg)
+
+The block diagram in Figure 1 demonstrates the overall architecture of the design.
+
+
+#### Schematic
+![Figure 2](images/lab1/schem.jpeg)
+
+Figure 2 shows the physical layout of the design. 
+
+
+### Result and Discussion
+
+
+### Conclusion
+
+### AI Prototype Summary
 
