@@ -3,6 +3,7 @@
     "listing": "/blog.html",
     "items": [
       "/posts/first-post.html",
+      "/posts/blog1.html",
       "/posts/reflection.html"
     ]
   }

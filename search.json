@@ -2,23 +2,9 @@
   {
     "objectID": "posts/first-post.html",
     "href": "posts/first-post.html",
-    "title": "E155 Posts Pages",
+    "title": "Blog Post 1",
     "section": "",
-    "text": "hi"
-  },
-  {
-    "objectID": "index.html",
-    "href": "index.html",
-    "title": "E155 Portfolio",
-    "section": "",
-    "text": "Sarah is a current undergraduate student in Computer Science, Mathematics, and Economics, she is passionate about leveraging technology and analytical problem-solving to drive impactful solutions. Her experience spans software development, optimization, and data analysis, with projects ranging from building AI-powered applications to designing mathematical models for decision-making.\nShe is always eager to explore innovative applications of technology, connect with like-minded professionals, and contribute to projects that create meaningful impact."
-  },
-  {
-    "objectID": "blog.html",
-    "href": "blog.html",
-    "title": "E155 Blog",
-    "section": "",
-    "text": "E155 Posts Pages\n\n\nWelcome to my E155 Posts Pages\n\n\n\n\n\nAug 29, 2025\n\n\nSarah Yandell\n\n\n\n\n\n\n\n\n\n\n\n\nReflection Post\n\n\nGoals for the Semester\n\n\n\n\n\nAug 29, 2025\n\n\nSarah Yandell\n\n\n\n\n\nNo matching items"
+    "text": "Something interesting I learned in the lab was how to solder. I had done it once before in E79 while building the robot, but we did not do very much of it. It was really cool to assemble the board on my own, and I learned more about how soldering works and how connections are made. I also got some more practice with verilog and circuits. While I was introduced to this in E85, I did not feel very confident while doing it at the time. Being able to revisit and putting more time in help build my confidence in being able to build a circuit and program a FPGA to do tasks.\nIn regards to AI, I think that AI is very powerful, and when used right, it can be incredibly helpful. I have noticed that for Verilog and cirucit design AI seem to be less accurte, but it is not completely wrong. I personally think that AI does a good job at explaning things and is often correct in that scenario. I think that if you can work along side AI whild understanding what is happening, AI can be very useful in digital hardware design. I think that you have to keep in mind that AI sometimes lies and it is most important to learn and understand."
   },
   {
     "objectID": "labs.html",
@@ -39,42 +25,56 @@
     "href": "labs.html#lab-2-multiplexed-7-segment-display",
     "title": "E155 Labs Page",
     "section": "Lab 2: Multiplexed 7-Segment Display",
-    "text": "Lab 2: Multiplexed 7-Segment Display"
+    "text": "Lab 2: Multiplexed 7-Segment Display\n\nIntroduction\nIn this lab we coded a seven segment display with two numbers to display the hex from two 4 DIP switch inputs. We also coded 5 leds to display the sum of the two hex numbers in binary.\n\n\nDesign and Testing Methodology\nThe on-board high-speed oscillator (HSOSC) from the iCE40 UltraPlus primitive library was used to generate a clock signal at 24 MHz. Then, a counter was used to divide the high frequency clock signal down so that we could quickly switch between the two digits on the seven segment display. Then\nThe design was developed using a seven segment display, led logic, counter, and mux modules to determine how and when to display the numbers in hex and binary.\n\n\nTechnical Documentation\nThe source code for the project can be found in the associated Github repository.\n\nBlock Diagram\n\n\n\nFigure 1\n\n\nThe block diagram in Figure 1 demonstrates the overall architecture of the design. There is a top level module of lab2_sy and it contains 4 submodules of a counter, mux, seven segment display (seg_display) and led logic.\n\n\nSchematic\n\n\n\nFigure 2\n\n\nFigure 2 shows the physical layout of the design. The LEDs were connected with 130 resistors, the seven segment display was connect with 100 and the transistors were connected with 330.\n\n\n\nResult and Discussion\nThe design met all intended design objectives. It preformed well. When the switches changed both the seven segment display and the led changed to show the new correct values.\n\nTestbench Simulation\n  \nThe Figures shows a screenshot of the QuestaSim simulation for all the modules.\n\n\n\nConclusion\nThe design successfully displayed the hex of the corresponding DIP switches and the 5 external LED displayed the sum of the two currently displayed digits on the seven segment diaply in binaryusing the on-board high-speed oscillator. I spent a total of 15 hours working on this lab.\n\n\nAI Prototype Summary\nI think that the LLM has a lot of knowledge of verilog but it is not fully able to apply and use its knowledge. It was able to write be a lot of code was able to complile for the code without files. However, the outouts were wrong. I think that with the reference to the lab 1 it made code more similar to what I know how to use but it did not compile. The LLMs have a lot of potential but youshould not follow them blindly (even if they do output),\nCODE WITHOUT FILES:\n// dual_7seg_time_mux.sv // Time-multiplex a single 4-&gt;7 decoder across two 4-bit input values. // Drives two 7-bit outputs (seg0, seg1) and two anode enables (anode[1:0]). // Written in SystemVerilog.\nmodule dual_7seg_time_mux #( parameter int CLK_FREQ_HZ = 50_000_000, // input clock frequency parameter int REFRESH_HZ = 1000, // refresh per digit (i.e. each digit enabled REFRESH_HZ times/sec) parameter bit SEG_ACTIVE_LOW = 1’b1, // common-anode typical: segments are active low parameter bit ANODE_ACTIVE_HIGH = 1’b1 // set how anode enable is driven (1 to enable if active high) ) ( input logic clk, input logic reset_n, // active low reset input logic [3:0] in0, // value for digit 0 input logic [3:0] in1, // value for digit 1 output logic [6:0] seg0, // 7-bit segments for display 0 (a..g). Updated by time-mux. output logic [6:0] seg1, // 7-bit segments for display 1 (a..g). Updated by time-mux. output logic [1:0] anode // anode[0] -&gt; display0 enable, anode[1] -&gt; display1 enable );\n// derived constants\nlocalparam int TICKS_PER_HALF_PERIOD = CLK_FREQ_HZ / (REFRESH_HZ * 2);\n// counter width\nlocalparam int CNT_WIDTH = $clog2(TICKS_PER_HALF_PERIOD + 1);\n\n// refresh counter and select\nlogic [CNT_WIDTH-1:0] refresh_cnt;\nlogic                 sel;        // 0 =&gt; show in0, 1 =&gt; show in1\nlogic [6:0]           decoder_out;\n\n// 4-&gt;7 decoder (hex) function\nfunction automatic logic [6:0] decoder4to7(input logic [3:0] nibble);\n    // segments bit order: {a,b,c,d,e,f,g}\n    // active-1 in this table means \"segment on\". We'll invert later if active low required.\n    logic [6:0] one_hot;\n    unique case (nibble)\n        4'h0: one_hot = 7'b1111110; // 0\n        4'h1: one_hot = 7'b0110000; // 1\n        4'h2: one_hot = 7'b1101101; // 2\n        4'h3: one_hot = 7'b1111001; // 3\n        4'h4: one_hot = 7'b0110011; // 4\n        4'h5: one_hot = 7'b1011011; // 5\n        4'h6: one_hot = 7'b1011111; // 6\n        4'h7: one_hot = 7'b1110000; // 7\n        4'h8: one_hot = 7'b1111111; // 8\n        4'h9: one_hot = 7'b1111011; // 9\n        4'hA: one_hot = 7'b1110111; // A\n        4'hB: one_hot = 7'b0011111; // b (lowercase)\n        4'hC: one_hot = 7'b1001110; // C\n        4'hD: one_hot = 7'b0111101; // d (lowercase)\n        4'hE: one_hot = 7'b1001111; // E\n        4'hF: one_hot = 7'b1000111; // F\n        default: one_hot = 7'b0000000;\n    endcase\n    // If segments are active low, invert before returning.\n    if (SEG_ACTIVE_LOW)\n        decoder4to7 = ~one_hot;\n    else\n        decoder4to7 = one_hot;\nendfunction\n\n// refresh counter and selection toggle\nalways_ff @(posedge clk or negedge reset_n) begin\n    if (!reset_n) begin\n        refresh_cnt &lt;= '0;\n        sel         &lt;= 1'b0;\n    end else begin\n        if (refresh_cnt == TICKS_PER_HALF_PERIOD - 1) begin\n            refresh_cnt &lt;= '0;\n            sel         &lt;= ~sel; // toggle between in0 and in1 each half period\n        end else begin\n            refresh_cnt &lt;= refresh_cnt + 1;\n        end\n    end\nend\n\n// run the single decoder on the selected input\nalways_comb begin\n    if (sel == 1'b0)\n        decoder_out = decoder4to7(in0);\n    else\n        decoder_out = decoder4to7(in1);\nend\n\n// Drive anodes according to sel. For a common-anode display:\n// - if ANODE_ACTIVE_HIGH==1, set anode[i]=1 to enable digit i.\n// - we enable only the currently selected digit.\nalways_comb begin\n    anode = 2'b00;\n    if (sel == 1'b0) begin\n        anode[0] = ANODE_ACTIVE_HIGH ? 1'b1 : 1'b0; // enable digit0\n        anode[1] = ANODE_ACTIVE_HIGH ? 1'b0 : 1'b1; // disable digit1\n    end else begin\n        anode[0] = ANODE_ACTIVE_HIGH ? 1'b0 : 1'b1; // disable digit0\n        anode[1] = ANODE_ACTIVE_HIGH ? 1'b1 : 1'b0; // enable digit1\n    end\nend\n\n// Since we only have a single decoder hardware block, we update seg0/seg1\n// alternately with the decoder output. The outputs hold the last pattern\n// driven to each display (i.e. last time that digit was active).\n// These are registers so they can be connected to external nets that expect\n// constant values (but note: they will be updated at the refresh rate).\nalways_ff @(posedge clk or negedge reset_n) begin\n    if (!reset_n) begin\n        seg0 &lt;= (SEG_ACTIVE_LOW) ? 7'b1111111 : 7'b0000000; // blank off depending on polarity\n        seg1 &lt;= (SEG_ACTIVE_LOW) ? 7'b1111111 : 7'b0000000;\n    end else begin\n        if (sel == 1'b0)\n            seg0 &lt;= decoder_out; // store pattern for display 0\n        else\n            seg1 &lt;= decoder_out; // store pattern for display 1\n    end\nend\nendmodule\nCODE WITH FILES:\n// seven_display_mux.sv // Time-multiplex a single seven_display decoder across two 7-seg displays. // // Instantiates the provided seven_display module (one instance). // Inputs: // clk - system clock (fast) to drive divider/multiplexing // reset_n- active-low synchronous reset // s0,s1 - 4-bit hex inputs to show on display 0 and display 1 // Outputs: // seg0, seg1 - 7-bit outputs for display 0 and display 1 respectively // // NOTE: The provided seven_display module should be in the same project/scope.\nmodule seven_display_mux #( parameter int DIV_WIDTH = 16 // adjust for multiplexing frequency )( input logic clk, input logic reset_n, // active-low synchronous reset input logic [3:0] s0, // value for display 0 input logic [3:0] s1, // value for display 1 output logic [6:0] seg0, // seven segment bits for display 0 output logic [6:0] seg1 // seven segment bits for display 1 );\n// clock divider counter\nlogic [DIV_WIDTH-1:0] div_cnt;\n// selection bit toggles at MSB of divider (approx clk / 2^(DIV_WIDTH-1) / 2)\nlogic sel;\n\n// decoded output from the single decoder instance\nlogic [6:0] decoded_seg;\n\n// instantiate single seven_display decoder (from provided file)\nseven_display decoder_inst (\n    .s    (sel ? s1 : s0),\n    .seg  (decoded_seg)\n);\n\n// divider + selection flip\nalways_ff @(posedge clk) begin\n    if (!reset_n) begin\n        div_cnt &lt;= '0;\n        sel     &lt;= 1'b0;\n    end else begin\n        div_cnt &lt;= div_cnt + 1'b1;\n        // use MSB of divider as selection flip (toggles at much slower rate)\n        sel &lt;= div_cnt[DIV_WIDTH-1];\n    end\nend\n\n// route decoded output to the appropriate display outputs\n// when not active, drive other display to \"off\" (all segments off)\n// (seven_display uses active low/active high per its definition; adapt if needed)\nlocalparam logic [6:0] SEG_OFF = 7'b1111111;\n\nalways_comb begin\n    if (sel == 1'b0) begin\n        // showing s0 on display 0\n        seg0 = decoded_seg;\n        seg1 = SEG_OFF;\n    end else begin\n        // showing s1 on display 1\n        seg0 = SEG_OFF;\n        seg1 = decoded_seg;\n    end\nend\nendmodule\nI think that the LLMs approach to the problem was not bad just its actual implementation needs some work. I could see using an LLM to work out how to break down an problem and then coding it myself."
   },
   {
     "objectID": "labs.html#lab-3-keypad-scanner",
     "href": "labs.html#lab-3-keypad-scanner",
     "title": "E155 Labs Page",
     "section": "Lab 3: Keypad Scanner",
-    "text": "Lab 3: Keypad Scanner"
+    "text": "Lab 3: Keypad Scanner\n\nIntroduction\nIn this lab we\n\n\nDesign and Testing Methodology\n\n\nTechnical Documentation\nThe source code for the project can be found in the associated Github repository.\n\nBlock Diagram\n\n\n\nFigure 1\n\n\nThe block diagram in Figure 1 demonstrates the overall architecture of the design.\n\n\nSchematic\n\n\n\nFigure 2\n\n\nFigure 2 shows the physical layout of the design.\n\n\n\nResult and Discussion\n\n\nConclusion\n\n\nAI Prototype Summary"
   },
   {
     "objectID": "labs.html#lab-4-digital-audio",
     "href": "labs.html#lab-4-digital-audio",
     "title": "E155 Labs Page",
     "section": "Lab 4: Digital Audio",
-    "text": "Lab 4: Digital Audio"
+    "text": "Lab 4: Digital Audio\n\nIntroduction\nIn this lab we\n\n\nDesign and Testing Methodology\n\n\nTechnical Documentation\nThe source code for the project can be found in the associated Github repository.\n\nBlock Diagram\n\n\n\nFigure 1\n\n\nThe block diagram in Figure 1 demonstrates the overall architecture of the design.\n\n\nSchematic\n\n\n\nFigure 2\n\n\nFigure 2 shows the physical layout of the design.\n\n\n\nResult and Discussion\n\n\nConclusion\n\n\nAI Prototype Summary"
   },
   {
     "objectID": "labs.html#lab-5-interrupts",
     "href": "labs.html#lab-5-interrupts",
     "title": "E155 Labs Page",
     "section": "Lab 5: Interrupts",
-    "text": "Lab 5: Interrupts"
+    "text": "Lab 5: Interrupts\n\nIntroduction\nIn this lab we\n\n\nDesign and Testing Methodology\n\n\nTechnical Documentation\nThe source code for the project can be found in the associated Github repository.\n\nBlock Diagram\n\n\n\nFigure 1\n\n\nThe block diagram in Figure 1 demonstrates the overall architecture of the design.\n\n\nSchematic\n\n\n\nFigure 2\n\n\nFigure 2 shows the physical layout of the design.\n\n\n\nResult and Discussion\n\n\nConclusion\n\n\nAI Prototype Summary"
   },
   {
     "objectID": "labs.html#lab-6-the-internet-of-things-and-serial-peripheral-interface",
     "href": "labs.html#lab-6-the-internet-of-things-and-serial-peripheral-interface",
     "title": "E155 Labs Page",
     "section": "Lab 6: The Internet of Things and Serial Peripheral Interface",
-    "text": "Lab 6: The Internet of Things and Serial Peripheral Interface"
+    "text": "Lab 6: The Internet of Things and Serial Peripheral Interface\n\nIntroduction\nIn this lab we\n\n\nDesign and Testing Methodology\n\n\nTechnical Documentation\nThe source code for the project can be found in the associated Github repository.\n\nBlock Diagram\n\n\n\nFigure 1\n\n\nThe block diagram in Figure 1 demonstrates the overall architecture of the design.\n\n\nSchematic\n\n\n\nFigure 2\n\n\nFigure 2 shows the physical layout of the design.\n\n\n\nResult and Discussion\n\n\nConclusion\n\n\nAI Prototype Summary"
   },
   {
     "objectID": "labs.html#lab-7-the-advanced-encryption-standard",
     "href": "labs.html#lab-7-the-advanced-encryption-standard",
     "title": "E155 Labs Page",
     "section": "Lab 7: The Advanced Encryption Standard",
-    "text": "Lab 7: The Advanced Encryption Standard"
+    "text": "Lab 7: The Advanced Encryption Standard\n\nIntroduction\nIn this lab we\n\n\nDesign and Testing Methodology\n\n\nTechnical Documentation\nThe source code for the project can be found in the associated Github repository.\n\nBlock Diagram\n\n\n\nFigure 1\n\n\nThe block diagram in Figure 1 demonstrates the overall architecture of the design.\n\n\nSchematic\n\n\n\nFigure 2\n\n\nFigure 2 shows the physical layout of the design.\n\n\n\nResult and Discussion\n\n\nConclusion\n\n\nAI Prototype Summary"
+  },
+  {
+    "objectID": "blog.html",
+    "href": "blog.html",
+    "title": "E155 Blog",
+    "section": "",
+    "text": "Blog Post 1\n\n\nFirst Blog Post\n\n\n\n\n\nSep 5, 2025\n\n\nSarah Yandell\n\n\n\n\n\n\n\n\n\n\n\n\nE155 Posts Pages\n\n\nWelcome to my E155 Posts Pages\n\n\n\n\n\nAug 29, 2025\n\n\nSarah Yandell\n\n\n\n\n\n\n\n\n\n\n\n\nReflection Post\n\n\nGoals for the Semester\n\n\n\n\n\nAug 29, 2025\n\n\nSarah Yandell\n\n\n\n\n\nNo matching items"
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "E155 Portfolio",
+    "section": "",
+    "text": "Sarah is a current undergraduate student in Computer Science, Mathematics, and Economics, she is passionate about leveraging technology and analytical problem-solving to drive impactful solutions. Her experience spans software development, optimization, and data analysis, with projects ranging from building AI-powered applications to designing mathematical models for decision-making.\nShe is always eager to explore innovative applications of technology, connect with like-minded professionals, and contribute to projects that create meaningful impact."
   },
   {
     "objectID": "posts/reflection.html",
