@@ -2,7 +2,7 @@
 title: "E155 Lab 3 Page"
 description: "Keypad Scanner"
 author: "Sarah Yandell"
-date: "8/29/25"
+date: "9/22/25"
 ---
 
 ## Lab 3: Keypad Scanner

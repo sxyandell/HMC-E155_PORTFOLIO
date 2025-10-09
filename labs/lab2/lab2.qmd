@@ -2,7 +2,7 @@
 title: "E155 Lab 2 Page"
 description: "Multiplexed 7-Segment Display"
 author: "Sarah Yandell"
-date: "8/29/25"
+date: "9/15/25"
 ---
 
 

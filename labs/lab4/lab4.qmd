@@ -2,7 +2,7 @@
 title: "E155 Lab 4 Page"
 description: "Digital Audio"
 author: "Sarah Yandell"
-date: "10/08/25"
+date: "9/29/25"
 ---
 
 ## Lab 4: Digital Audio

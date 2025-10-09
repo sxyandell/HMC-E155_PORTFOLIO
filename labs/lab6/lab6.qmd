@@ -2,7 +2,7 @@
 title: "E155 Lab 6 Page"
 description: "The Internet of Things and Serial Peripheral Interface"
 author: "Sarah Yandell"
-date: "10/08/25"
+date: "10/27/25"
 ---
 
 ## Lab 6: The Internet of Things and Serial Peripheral Interface
