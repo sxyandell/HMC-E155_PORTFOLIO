@@ -48,6 +48,98 @@ and reported results at 1 Hz. The approach performed reliably across a range of 
 
 ### AI Prototype Summary
 
-I put the promopt into the LMM and it gave me back code that was using 
+I put the promopt into the LMM and it gave me back code that using a library called Hardware Abstraction Layer (HAL) library for GPIO. The library was
+aimed to make coding GPIO eaasier but since I would have to odownload and get the library working I requested that the LLM make code without using 
+the library. Then it gave me this code:
+
+
+volatile int32_t encoder_count = 0;
+volatile uint8_t last_state = 0;
+
+static inline uint8_t read_encoder_state(void) {
+    uint8_t a = (GPIOA->IDR & (1 << 0)) ? 1 : 0;
+    uint8_t b = (GPIOA->IDR & (1 << 1)) ? 1 : 0;
+    return (a << 1) | b;
+}
+
+void Encoder_Init(void) {
+    // 1. Enable GPIOA and SYSCFG clocks
+    RCC->AHB2ENR |= RCC_AHB2ENR_GPIOAEN;
+    RCC->APB2ENR |= RCC_APB2ENR_SYSCFGEN;
+
+    // 2. Configure PA0 and PA1 as inputs
+    GPIOA->MODER &= ~((3 << (0 * 2)) | (3 << (1 * 2)));  // 00 = input
+
+    // 3. Connect EXTI0 and EXTI1 lines to PA0 and PA1
+    SYSCFG->EXTICR[0] &= ~((0xF << 0) | (0xF << 4));     // EXTI0->PA0, EXTI1->PA1
+
+    // 4. Configure both edges to trigger interrupts
+    EXTI->RTSR1 |= (1 << 0) | (1 << 1);   // Rising edge
+    EXTI->FTSR1 |= (1 << 0) | (1 << 1);   // Falling edge
+
+    // 5. Unmask EXTI0 and EXTI1 interrupts
+    EXTI->IMR1 |= (1 << 0) | (1 << 1);
+
+    // 6. Enable NVIC IRQs for EXTI0 and EXTI1
+    NVIC_SetPriority(EXTI0_IRQn, 1);
+    NVIC_EnableIRQ(EXTI0_IRQn);
+    NVIC_SetPriority(EXTI1_IRQn, 1);
+    NVIC_EnableIRQ(EXTI1_IRQn);
+
+    // 7. Record initial state
+    last_state = read_encoder_state();
+}
+
+// --- Interrupt Handlers ---
+
+void EXTI0_IRQHandler(void) {
+    if (EXTI->PR1 & (1 << 0)) {   // check if EXTI0 triggered
+        EXTI->PR1 = (1 << 0);     // clear pending bit
+        uint8_t state = read_encoder_state();
+
+        // Decode direction
+        if ((last_state == 0b00 && state == 0b01) ||
+            (last_state == 0b01 && state == 0b11) ||
+            (last_state == 0b11 && state == 0b10) ||
+            (last_state == 0b10 && state == 0b00)) {
+            encoder_count++;
+        } else if (
+            (last_state == 0b00 && state == 0b10) ||
+            (last_state == 0b10 && state == 0b11) ||
+            (last_state == 0b11 && state == 0b01) ||
+            (last_state == 0b01 && state == 0b00)) {
+            encoder_count--;
+        }
+
+        last_state = state;
+    }
+}
+
+void EXTI1_IRQHandler(void) {
+    if (EXTI->PR1 & (1 << 1)) {   // check if EXTI1 triggered
+        EXTI->PR1 = (1 << 1);     // clear pending bit
+        uint8_t state = read_encoder_state();
+
+        // Same direction decoding
+        if ((last_state == 0b00 && state == 0b01) ||
+            (last_state == 0b01 && state == 0b11) ||
+            (last_state == 0b11 && state == 0b10) ||
+            (last_state == 0b10 && state == 0b00)) {
+            encoder_count++;
+        } else if (
+            (last_state == 0b00 && state == 0b10) ||
+            (last_state == 0b10 && state == 0b11) ||
+            (last_state == 0b11 && state == 0b01) ||
+            (last_state == 0b01 && state == 0b00)) {
+            encoder_count--;
+        }
+
+        last_state = state;
+    }
+}
+
+I ran this with my main function and it did not print any values. I think that the code that the LLM writes looks nice and some of the 
+ways it did things were cool but all together it does not work very well. I think that the LLM is better as a sounding board than at writing stright code.
+
 
 
