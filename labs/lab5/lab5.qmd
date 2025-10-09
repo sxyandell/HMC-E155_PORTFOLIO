@@ -1,0 +1,53 @@
+---
+title: "E155 Lab 5 Page"
+description: "Interrupts"
+author: "Sarah Yandell"
+date: "10/08/25"
+---
+
+## Lab 5: Interrupts
+
+### Introduction
+In this lab, I used the STM32L432KC MCU to read a quadrature encoder via EXTI interrupts on pins PA1 and PA2, 
+determine rotation direction, and compute angular velocity. The measured velocity (in revolutions per second) 
+and direction are printed at a 1 Hz update rate.
+
+### Design and Testing Methodology
+The encoder channels (A and B) were connected to 5 V–tolerant GPIO pins on the STM32L432KC and configured as inputs with 
+pull‑ups. External interrupt lines (EXTI1 and EXTI2) were enabled on both rising and falling edges to capture all state 
+transitions. Direction is checked only when leaving equal states (00 or 11), and a signed quadrature count accumulates by 
+±1 per edge according to the checked direction. A periodic 1sec interval computes the velocity as counts per second divided 
+by counts per revolution (×4 for both edges), then resets the interval count. Velocity is positive which CW and negative when CCW.
+
+Verification was done by running the code and timing till 30 rotation manually. Then checking if the speeds matched.
+
+
+### Technical Documentation
+The source code for the project can be found in the associated [Github repository](https://github.com/sxyandell/e155-lab5).
+
+
+#### Schematic
+Figure 1 shows the wiring for the encoder channels to the MCU. The pins used were 5 V–tolerant and the motor 
+was powered by a extermal power supply that was changed between 0V - 12V. 
+
+![](images/schem.jpg)
+
+
+### Results and Discussion
+The system successfully met the lab requirements: direction was correctly 
+decoded, and velocity was accurately displayed across both low and high speeds.
+ Using the motor’s COUNTS_PER_REV value of 408, we determined that at 10 V, 
+ the motor’s speed was approximately 2.5 rev/s, which aligns with the expected 
+ performance. The system functioned correctly for both clockwise (CW) and 
+ counterclockwise (CCW) rotation.
+
+### Conclusion
+An EXTI‑based quadrature decoder was implemented on the STM32L432KC that measured direction and angular velocity 
+and reported results at 1 Hz. The approach performed reliably across a range of speeds. I spent approximately 15 hours completing this lab.
+
+
+### AI Prototype Summary
+
+I put the promopt into the LMM and it gave me back code that was using 
+
+

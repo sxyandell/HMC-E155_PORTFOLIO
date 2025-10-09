@@ -1,0 +1,36 @@
+---
+title: "E155 Lab 7 Page"
+description: "The Advanced Encryption Standard"
+author: "Sarah Yandell"
+date: "10/08/25"
+---
+
+## Lab 7: The Advanced Encryption Standard
+
+### Introduction
+In this lab we 
+
+### Design and Testing Methodology
+
+
+### Technical Documentation
+The source code for the project can be found in the associated [Github repository](https://github.com/sxyandell/e155-lab1).
+
+#### Block Diagram
+![Figure 1](images/lab1/blockDiagram.jpeg)
+
+The block diagram in Figure 1 demonstrates the overall architecture of the design.
+
+
+#### Schematic
+![Figure 2](images/lab1/schem.jpeg)
+
+Figure 2 shows the physical layout of the design. 
+
+
+### Result and Discussion
+
+
+### Conclusion
+
+### AI Prototype Summary
