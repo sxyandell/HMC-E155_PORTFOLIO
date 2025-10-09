@@ -46,7 +46,10 @@ decoded, and velocity was accurately displayed across both low and high speeds.
  counterclockwise (CCW) rotation.
 
 #### Polling 
-Polling would run slower 
+I found the frequency of my code while using interupts at 10V using an oscilloscope, and frequency is 1khz. This meaans that the speed is 1000/408 = 2.45 rev/sec.
+Then I made code that toggled a pin in a while loop in main. The idea behind this was the fastest the MCU do polling is this speed. I found
+the frequency was 549hz which is 1.35 rev/sec. So the polling would miss edges since it is not able to sample as fast.
+
 
 ### Conclusion
 An EXTI‑based quadrature decoder was implemented on the STM32L432KC that measured direction and angular velocity 
