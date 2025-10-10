@@ -46,9 +46,12 @@ decoded, and velocity was accurately displayed across both low and high speeds.
  counterclockwise (CCW) rotation.
 
 #### Polling 
-I found the frequency of my code while using interupts at 10V using an oscilloscope, and frequency is 1khz. This meaans that the speed is 1000/408 = 2.45 rev/sec.
-Then I made code that toggled a pin in a while loop in main. The idea behind this was the fastest the MCU do polling is this speed. I found
-the frequency was 549hz which is 1.35 rev/sec. So the polling would miss edges since it is not able to sample as fast.
+At 10V, I measured the encoder output frequency using an oscilloscope and found it to be around 1 kHz. This means the motor speed is 
+1000/408 = 2.45 rev/sec. Then, I wrote code that toggled a pin inside a while loop in main to test how fast the MCU could perform polling. 
+I measured the frequency of this signal and found it to be 549 Hz, which corresponds to about 1.35 rev/sec. This shows that the polling 
+rate is slower than the encoder frequency, so the MCU would miss some edges since it is not able to sample as fast. Therefore, interrupts are 
+needed to correctly capture all the encoder transitions.
+
 
 
 ### Conclusion
