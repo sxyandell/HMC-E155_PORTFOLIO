@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Sarah Yandell">
-<meta name="dcterms.date" content="2025-09-29">
+<meta name="dcterms.date" content="2025-11-06">
 <meta name="description" content="Digital Audio">
 
 <title>E155 Lab 4 Page – E155 Portfolio</title>
@@ -22,6 +22,41 @@ ul.task-list li input[type="checkbox"] {
   width: 0.8em;
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 </style>
 
@@ -132,10 +167,26 @@ ul.task-list li input[type="checkbox"] {
   <li><a href="#introduction" id="toc-introduction" class="nav-link" data-scroll-target="#introduction">Introduction</a></li>
   <li><a href="#design-and-testing-methodology" id="toc-design-and-testing-methodology" class="nav-link" data-scroll-target="#design-and-testing-methodology">Design and Testing Methodology</a></li>
   <li><a href="#technical-documentation" id="toc-technical-documentation" class="nav-link" data-scroll-target="#technical-documentation">Technical Documentation</a></li>
-  <li><a href="#result-and-discussion" id="toc-result-and-discussion" class="nav-link" data-scroll-target="#result-and-discussion">Result and Discussion</a></li>
+  <li><a href="#schematic" id="toc-schematic" class="nav-link" data-scroll-target="#schematic">Schematic</a></li>
+  <li><a href="#results-and-discussion" id="toc-results-and-discussion" class="nav-link" data-scroll-target="#results-and-discussion">Results and Discussion</a></li>
   <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion">Conclusion</a></li>
   <li><a href="#ai-prototype-summary" id="toc-ai-prototype-summary" class="nav-link" data-scroll-target="#ai-prototype-summary">AI Prototype Summary</a></li>
   </ul></li>
+  <li><a href="#goal" id="toc-goal" class="nav-link" data-scroll-target="#goal">🧭 Goal</a></li>
+  <li><a href="#choosing-the-right-timer" id="toc-choosing-the-right-timer" class="nav-link" data-scroll-target="#choosing-the-right-timer">1️⃣ Choosing the right timer</a>
+  <ul class="collapse">
+  <li><a href="#stm32l432kc-timer-options" id="toc-stm32l432kc-timer-options" class="nav-link" data-scroll-target="#stm32l432kc-timer-options">STM32L432KC timer options</a></li>
+  </ul></li>
+  <li><a href="#basic-frequency-generation-math" id="toc-basic-frequency-generation-math" class="nav-link" data-scroll-target="#basic-frequency-generation-math">2️⃣ Basic frequency generation math</a></li>
+  <li><a href="#example-calculation" id="toc-example-calculation" class="nav-link" data-scroll-target="#example-calculation">3️⃣ Example calculation</a></li>
+  <li><a href="#key-registers-to-configure" id="toc-key-registers-to-configure" class="nav-link" data-scroll-target="#key-registers-to-configure">4️⃣ Key registers to configure</a>
+  <ul class="collapse">
+  <li><a href="#minimum-set" id="toc-minimum-set" class="nav-link" data-scroll-target="#minimum-set">Minimum set:</a></li>
+  </ul></li>
+  <li><a href="#example-code-snippet-toggle-mode" id="toc-example-code-snippet-toggle-mode" class="nav-link" data-scroll-target="#example-code-snippet-toggle-mode">5️⃣ Example code snippet (toggle mode)</a></li>
+  <li><a href="#for-pwm-duty-control-instead-of-toggle" id="toc-for-pwm-duty-control-instead-of-toggle" class="nav-link" data-scroll-target="#for-pwm-duty-control-instead-of-toggle">6️⃣ For PWM (duty control) instead of toggle</a></li>
+  <li><a href="#adjusting-the-frequency-dynamically" id="toc-adjusting-the-frequency-dynamically" class="nav-link" data-scroll-target="#adjusting-the-frequency-dynamically">7️⃣ Adjusting the frequency dynamically</a></li>
+  <li><a href="#summary" id="toc-summary" class="nav-link" data-scroll-target="#summary">✅ Summary</a></li>
   </ul>
 </nav>
     </div>
@@ -166,7 +217,7 @@ ul.task-list li input[type="checkbox"] {
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">September 29, 2025</p>
+      <p class="date">November 6, 2025</p>
     </div>
   </div>
   
@@ -182,46 +233,259 @@ ul.task-list li input[type="checkbox"] {
 <h2 class="anchored" data-anchor-id="lab-4-digital-audio">Lab 4: Digital Audio</h2>
 <section id="introduction" class="level3">
 <h3 class="anchored" data-anchor-id="introduction">Introduction</h3>
-<p>In this lab we</p>
+<p>In this lab, I used the STM32L432KC MCU to generate audible tones by toggling the GPIO pin A6 at precise frequencies and durations, then amplified the signal with an LM386 to drive a speaker. The system played songs defined as frequency and duration pairs, including rests, a nd stopped on an end‑marker.</p>
 </section>
 <section id="design-and-testing-methodology" class="level3">
 <h3 class="anchored" data-anchor-id="design-and-testing-methodology">Design and Testing Methodology</h3>
+<p>The timer‑driven output pin on the MCU was connectyed to to the LM386 input and then to a speaker. The potentiomoter was connected to the input of the speaker to control volumn.</p>
 </section>
 <section id="technical-documentation" class="level3">
 <h3 class="anchored" data-anchor-id="technical-documentation">Technical Documentation</h3>
-<p>The source code for the project can be found in the associated <a href="https://github.com/sxyandell/e155-lab1">Github repository</a>.</p>
-<section id="block-diagram" class="level4">
-<h4 class="anchored" data-anchor-id="block-diagram">Block Diagram</h4>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="images/lab1/blockDiagram.jpeg" class="img-fluid figure-img"></p>
-<figcaption>Figure 1</figcaption>
-</figure>
-</div>
-<p>The block diagram in Figure 1 demonstrates the overall architecture of the design.</p>
+<p>The source code for the project can be found in the associated <a href="https://github.com/sxyandell/e155-lab4">Github repository</a>.</p>
 </section>
-<section id="schematic" class="level4">
-<h4 class="anchored" data-anchor-id="schematic">Schematic</h4>
+<section id="schematic" class="level3">
+<h3 class="anchored" data-anchor-id="schematic">Schematic</h3>
+<p><img src="images/4schem.jpeg" class="img-fluid" alt="Figure 1"> Figure 1 shows the schematic of the MCU, LM386 and speaker and absence of large DC offsets.</p>
+</section>
+<section id="results-and-discussion" class="level3">
+<h3 class="anchored" data-anchor-id="results-and-discussion">Results and Discussion</h3>
+<p>The system met the lab goals. Tones were at accurate pitches. The LM386 provided sufficient volume for a speaker. Für Elise played with recognizable melody and timing. Rests were silent.</p>
+<section id="calculations-and-proof" class="level4">
+<h4 class="anchored" data-anchor-id="calculations-and-proof">Calculations and Proof</h4>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="images/lab1/schem.jpeg" class="img-fluid figure-img"></p>
+<p><img src="images/minmax.jpeg" class="img-fluid figure-img"></p>
 <figcaption>Figure 2</figcaption>
 </figure>
 </div>
-<p>Figure 2 shows the physical layout of the design.</p>
+<p>Figure 2 should the calculations for the maximum and minum duration and frequency</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/prove.jpeg" class="img-fluid figure-img"></p>
+<figcaption>Figure 3</figcaption>
+</figure>
+</div>
+<p>Figure 3 shows the proof of the duration and frequency calculations</p>
 </section>
-</section>
-<section id="result-and-discussion" class="level3">
-<h3 class="anchored" data-anchor-id="result-and-discussion">Result and Discussion</h3>
 </section>
 <section id="conclusion" class="level3">
 <h3 class="anchored" data-anchor-id="conclusion">Conclusion</h3>
+<p>I implemented a microcontroller based audio player that converts frequency and duration pairs into audible notes using timer‑driven PWM and an LM386 amplifier. The design performed reliably and matched target pitches and durations for Für Elise and Head Shoulders Knees and Toes. I spent approximately 20 hours on this lab.</p>
 </section>
 <section id="ai-prototype-summary" class="level3">
 <h3 class="anchored" data-anchor-id="ai-prototype-summary">AI Prototype Summary</h3>
-
-
+<p>I put the prompt into the LLM and it gave me back this</p>
+<p>Let’s go step-by-step and make this concrete for the <strong>STM32L432KC (Cortex-M4, 80 MHz max)</strong>.</p>
+<hr>
 </section>
+</section>
+<section id="goal" class="level2">
+<h2 class="anchored" data-anchor-id="goal">🧭 Goal</h2>
+<p>Generate output frequencies between <strong>220 Hz and 1 kHz</strong>, and output them on a GPIO pin (e.g., to drive a buzzer or waveform test).</p>
+<hr>
+</section>
+<section id="choosing-the-right-timer" class="level2">
+<h2 class="anchored" data-anchor-id="choosing-the-right-timer">1️⃣ Choosing the right timer</h2>
+<section id="stm32l432kc-timer-options" class="level3">
+<h3 class="anchored" data-anchor-id="stm32l432kc-timer-options">STM32L432KC timer options</h3>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 18%">
+<col style="width: 12%">
+<col style="width: 6%">
+<col style="width: 62%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Timer</th>
+<th>Type</th>
+<th>Channels</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>TIM1</strong></td>
+<td>Advanced</td>
+<td>4</td>
+<td>Has complementary outputs, can drive GPIO directly via AF (alternate function)</td>
+</tr>
+<tr class="even">
+<td><strong>TIM2, TIM5</strong></td>
+<td>General-purpose</td>
+<td>32-bit</td>
+<td>Great for low frequencies due to long counter range</td>
+</tr>
+<tr class="odd">
+<td><strong>TIM15, TIM16, TIM17</strong></td>
+<td>General-purpose</td>
+<td>16-bit</td>
+<td>Simpler, fewer channels</td>
+</tr>
+</tbody>
+</table>
+<p>For output frequencies around <strong>hundreds of Hz</strong>, <strong>any general-purpose timer</strong> will work. However, <strong>TIM2</strong> (32-bit, general purpose) or <strong>TIM1</strong> (advanced, widely supported for PWM output) are best choices.</p>
+<p><strong>Recommendation:</strong></p>
+<ul>
+<li>Use <strong>TIM2</strong> if you want simplicity and flexibility.</li>
+<li>Use <strong>TIM1</strong> if you want PWM on a predefined pin (e.g., PA8, PA9, PA10).</li>
+</ul>
+<hr>
+</section>
+</section>
+<section id="basic-frequency-generation-math" class="level2">
+<h2 class="anchored" data-anchor-id="basic-frequency-generation-math">2️⃣ Basic frequency generation math</h2>
+<p>The timer’s output frequency depends on: [ f_{out} = ]</p>
+<p>where:</p>
+<ul>
+<li>( f_{timer} ): clock input to the timer (often from APB1/APB2 timer clock)</li>
+<li>( PSC ): prescaler register (TIMx_PSC)</li>
+<li>( ARR ): auto-reload register (TIMx_ARR)</li>
+</ul>
+<p>The timer counts from 0 to ARR, then resets and triggers an update or toggle.</p>
+<p>If you want a <strong>square wave</strong> on a pin via toggle mode: [ f_{pin} = ] (because one full period needs two toggles).</p>
+<hr>
+</section>
+<section id="example-calculation" class="level2">
+<h2 class="anchored" data-anchor-id="example-calculation">3️⃣ Example calculation</h2>
+<p>Assume:</p>
+<ul>
+<li>( f_{timer} = 80, ) (TIM2 clock)</li>
+<li>Desired ( f_{pin} = 440, ) (A4)</li>
+</ul>
+<p>We’ll use toggle mode (one output toggle per overflow).</p>
+<p>[ ARR = - 1]</p>
+<p>Try with ( PSC = 7999 ) (divide by 8000):</p>
+<p>[ ARR = - 1 ]</p>
+<p>→ Choose ARR = 11</p>
+<p>That gives ( f Hz ) — close enough, or tweak PSC slightly.</p>
+<hr>
+</section>
+<section id="key-registers-to-configure" class="level2">
+<h2 class="anchored" data-anchor-id="key-registers-to-configure">4️⃣ Key registers to configure</h2>
+<section id="minimum-set" class="level3">
+<h3 class="anchored" data-anchor-id="minimum-set">Minimum set:</h3>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Register</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>TIMx_PSC</code></td>
+<td>Sets prescaler</td>
+</tr>
+<tr class="even">
+<td><code>TIMx_ARR</code></td>
+<td>Sets auto-reload (period)</td>
+</tr>
+<tr class="odd">
+<td><code>TIMx_CCRy</code></td>
+<td>(if PWM mode) compare value</td>
+</tr>
+<tr class="even">
+<td><code>TIMx_CCMR1</code></td>
+<td>Capture/compare mode register (set toggle/PWM mode)</td>
+</tr>
+<tr class="odd">
+<td><code>TIMx_CCER</code></td>
+<td>Enable channel output</td>
+</tr>
+<tr class="even">
+<td><code>TIMx_CR1</code></td>
+<td>Enable counter</td>
+</tr>
+<tr class="odd">
+<td><code>TIMx_EGR</code></td>
+<td>Generate update event (load PSC/ARR)</td>
+</tr>
+</tbody>
+</table>
+<hr>
+</section>
+</section>
+<section id="example-code-snippet-toggle-mode" class="level2">
+<h2 class="anchored" data-anchor-id="example-code-snippet-toggle-mode">5️⃣ Example code snippet (toggle mode)</h2>
+<p>Let’s say we use <strong>TIM2, Channel 1 → PA0 (AF1)</strong>.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode c code-with-copy"><code class="sourceCode c"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">// Enable GPIOA and TIM2 clocks</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>RCC<span class="op">-&gt;</span>AHB2ENR <span class="op">|=</span> RCC_AHB2ENR_GPIOAEN<span class="op">;</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>RCC<span class="op">-&gt;</span>APB1ENR1 <span class="op">|=</span> RCC_APB1ENR1_TIM2EN<span class="op">;</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="co">// Configure PA0 as alternate function (AF1 for TIM2_CH1)</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>GPIOA<span class="op">-&gt;</span>MODER <span class="op">&amp;=</span> <span class="op">~(</span><span class="dv">3</span><span class="bu">U</span> <span class="op">&lt;&lt;</span> <span class="op">(</span><span class="dv">0</span><span class="op">*</span><span class="dv">2</span><span class="op">));</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>GPIOA<span class="op">-&gt;</span>MODER <span class="op">|=</span>  <span class="op">(</span><span class="dv">2</span><span class="bu">U</span> <span class="op">&lt;&lt;</span> <span class="op">(</span><span class="dv">0</span><span class="op">*</span><span class="dv">2</span><span class="op">));</span> <span class="co">// AF mode</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>GPIOA<span class="op">-&gt;</span>AFR<span class="op">[</span><span class="dv">0</span><span class="op">]</span> <span class="op">&amp;=</span> <span class="op">~(</span><span class="bn">0xF</span> <span class="op">&lt;&lt;</span> <span class="op">(</span><span class="dv">0</span><span class="op">*</span><span class="dv">4</span><span class="op">));</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>GPIOA<span class="op">-&gt;</span>AFR<span class="op">[</span><span class="dv">0</span><span class="op">]</span> <span class="op">|=</span>  <span class="op">(</span><span class="dv">1</span><span class="bu">U</span> <span class="op">&lt;&lt;</span> <span class="op">(</span><span class="dv">0</span><span class="op">*</span><span class="dv">4</span><span class="op">));</span> <span class="co">// AF1 = TIM2_CH1</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="co">// Timer setup for 440 Hz square wave (toggle output)</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>TIM2<span class="op">-&gt;</span>PSC <span class="op">=</span> <span class="dv">7999</span><span class="op">;</span>      <span class="co">// prescaler (divide by 8000)</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>TIM2<span class="op">-&gt;</span>ARR <span class="op">=</span> <span class="dv">11</span><span class="op">;</span>        <span class="co">// auto-reload value</span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>TIM2<span class="op">-&gt;</span>CCMR1 <span class="op">=</span> <span class="op">(</span><span class="dv">3</span> <span class="op">&lt;&lt;</span> <span class="dv">4</span><span class="op">);</span>  <span class="co">// OC1M = 0b011: toggle on match</span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>TIM2<span class="op">-&gt;</span>CCER  <span class="op">|=</span> TIM_CCER_CC1E<span class="op">;</span> <span class="co">// enable channel 1 output</span></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>TIM2<span class="op">-&gt;</span>CR1   <span class="op">|=</span> TIM_CR1_CEN<span class="op">;</span>   <span class="co">// start timer</span></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>TIM2<span class="op">-&gt;</span>EGR   <span class="op">|=</span> TIM_EGR_UG<span class="op">;</span>    <span class="co">// update registers</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>This gives ≈ 454 Hz on <strong>PA0</strong>.</p>
+<hr>
+</section>
+<section id="for-pwm-duty-control-instead-of-toggle" class="level2">
+<h2 class="anchored" data-anchor-id="for-pwm-duty-control-instead-of-toggle">6️⃣ For PWM (duty control) instead of toggle</h2>
+<p>Use <strong>PWM mode 1</strong>:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode c code-with-copy"><code class="sourceCode c"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>TIM2<span class="op">-&gt;</span>CCMR1 <span class="op">=</span> <span class="op">(</span><span class="dv">6</span> <span class="op">&lt;&lt;</span> <span class="dv">4</span><span class="op">);</span>     <span class="co">// OC1M = 110 (PWM mode 1)</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>TIM2<span class="op">-&gt;</span>CCR1 <span class="op">=</span> ARR <span class="op">/</span> <span class="dv">2</span><span class="op">;</span>       <span class="co">// 50% duty</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Then connect PA0 to a buzzer or scope.</p>
+<hr>
+</section>
+<section id="adjusting-the-frequency-dynamically" class="level2">
+<h2 class="anchored" data-anchor-id="adjusting-the-frequency-dynamically">7️⃣ Adjusting the frequency dynamically</h2>
+<p>You can change <code>ARR</code> (or <code>PSC</code>) on the fly:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode c code-with-copy"><code class="sourceCode c"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>TIM2<span class="op">-&gt;</span>ARR <span class="op">=</span> new_ARR<span class="op">;</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>TIM2<span class="op">-&gt;</span>EGR <span class="op">|=</span> TIM_EGR_UG<span class="op">;</span> <span class="co">// force update</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>You can precompute ARR values for each desired tone.</p>
+<hr>
+</section>
+<section id="summary" class="level2">
+<h2 class="anchored" data-anchor-id="summary">✅ Summary</h2>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 36%">
+<col style="width: 63%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Goal</th>
+<th>Recommendation</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Easy GPIO output</td>
+<td><strong>TIM2_CH1 (PA0, AF1)</strong> or <strong>TIM1_CH1 (PA8, AF1)</strong></td>
+</tr>
+<tr class="even">
+<td>Frequency formula</td>
+<td>( f = ) for toggle</td>
+</tr>
+<tr class="odd">
+<td>Registers</td>
+<td><code>PSC</code>, <code>ARR</code>, <code>CCMRx</code>, <code>CCER</code>, <code>CR1</code>, <code>EGR</code></td>
+</tr>
+<tr class="even">
+<td>Typical prescaler</td>
+<td>8k–10k for 80 MHz clock gives 10 kHz base</td>
+</tr>
+<tr class="odd">
+<td>Frequency range (220–1000 Hz)</td>
+<td>ARR ≈ 18 to 3</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<p>If you tell me <strong>which pin</strong> you’d like to output on (e.g., PA8, PA0, PB3, etc.), I can give you the <strong>exact AF setting and initialization code</strong> for that pin and frequency range. Would you like that?</p>
+<p>I think that the LLM is helpful in doing small tasks and explaining things when prompted well but large broad overall tasks are hard for it since it get confused lies and then gets even more wrong. Even with the manual it was still having errors.</p>
+
+
 </section>
 
 </main> <!-- /main -->
